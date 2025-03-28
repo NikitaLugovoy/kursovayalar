@@ -1,0 +1,3088 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.0
+-- Dumped by pg_dump version 17.0
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: applications; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.applications (
+    id bigint NOT NULL,
+    office_id bigint NOT NULL,
+    device_id bigint NOT NULL,
+    reason text NOT NULL,
+    data date NOT NULL,
+    user_id bigint NOT NULL,
+    status_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.applications OWNER TO postgres;
+
+--
+-- Name: applications_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.applications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.applications_id_seq OWNER TO postgres;
+
+--
+-- Name: applications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.applications_id_seq OWNED BY public.applications.id;
+
+
+--
+-- Name: body; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.body (
+    id bigint NOT NULL,
+    number bigint NOT NULL,
+    address text NOT NULL
+);
+
+
+ALTER TABLE public.body OWNER TO postgres;
+
+--
+-- Name: body_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.body_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.body_id_seq OWNER TO postgres;
+
+--
+-- Name: body_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.body_id_seq OWNED BY public.body.id;
+
+
+--
+-- Name: chat; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.chat (
+    id bigint NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.chat OWNER TO postgres;
+
+--
+-- Name: chat_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.chat_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.chat_id_seq OWNER TO postgres;
+
+--
+-- Name: chat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.chat_id_seq OWNED BY public.chat.id;
+
+
+--
+-- Name: condition; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.condition (
+    id bigint NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.condition OWNER TO postgres;
+
+--
+-- Name: condition_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.condition_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.condition_id_seq OWNER TO postgres;
+
+--
+-- Name: condition_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.condition_id_seq OWNED BY public.condition.id;
+
+
+--
+-- Name: devices; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.devices (
+    id bigint NOT NULL,
+    type_id bigint NOT NULL,
+    serial_number bigint NOT NULL,
+    package_id bigint NOT NULL,
+    condition_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.devices OWNER TO postgres;
+
+--
+-- Name: devices_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.devices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.devices_id_seq OWNER TO postgres;
+
+--
+-- Name: devices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
+
+
+--
+-- Name: floors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.floors (
+    id bigint NOT NULL,
+    number bigint NOT NULL
+);
+
+
+ALTER TABLE public.floors OWNER TO postgres;
+
+--
+-- Name: floors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.floors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.floors_id_seq OWNER TO postgres;
+
+--
+-- Name: floors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.floors_id_seq OWNED BY public.floors.id;
+
+
+--
+-- Name: messages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.messages (
+    id bigint NOT NULL,
+    person1_id bigint NOT NULL,
+    messenges text NOT NULL,
+    "time" timestamp(0) without time zone NOT NULL,
+    chat_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.messages OWNER TO postgres;
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.messages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.messages_id_seq OWNER TO postgres;
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
+
+
+--
+-- Name: offices; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.offices (
+    id bigint NOT NULL,
+    number bigint NOT NULL,
+    floors_id bigint NOT NULL,
+    body_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.offices OWNER TO postgres;
+
+--
+-- Name: offices_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.offices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.offices_id_seq OWNER TO postgres;
+
+--
+-- Name: offices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.offices_id_seq OWNED BY public.offices.id;
+
+
+--
+-- Name: package_device; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.package_device (
+    id integer NOT NULL,
+    office_id integer NOT NULL,
+    number integer NOT NULL
+);
+
+
+ALTER TABLE public.package_device OWNER TO postgres;
+
+--
+-- Name: package_device_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.package_device_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.package_device_id_seq OWNER TO postgres;
+
+--
+-- Name: package_device_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.package_device_id_seq OWNED BY public.package_device.id;
+
+
+--
+-- Name: package_device_number_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.package_device_number_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.package_device_number_seq OWNER TO postgres;
+
+--
+-- Name: package_device_number_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.package_device_number_seq OWNED BY public.package_device.number;
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.roles (
+    id bigint NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.roles OWNER TO postgres;
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.roles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.roles_id_seq OWNER TO postgres;
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
+
+
+--
+-- Name: statuses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.statuses (
+    id bigint NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.statuses OWNER TO postgres;
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.statuses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.statuses_id_seq OWNER TO postgres;
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.statuses_id_seq OWNED BY public.statuses.id;
+
+
+--
+-- Name: type_devices; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.type_devices (
+    id bigint NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE public.type_devices OWNER TO postgres;
+
+--
+-- Name: type_devices_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.type_devices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.type_devices_id_seq OWNER TO postgres;
+
+--
+-- Name: type_devices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.type_devices_id_seq OWNED BY public.type_devices.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    name text NOT NULL,
+    login text NOT NULL,
+    password text NOT NULL,
+    role_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: applications id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications ALTER COLUMN id SET DEFAULT nextval('public.applications_id_seq'::regclass);
+
+
+--
+-- Name: body id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.body ALTER COLUMN id SET DEFAULT nextval('public.body_id_seq'::regclass);
+
+
+--
+-- Name: chat id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chat ALTER COLUMN id SET DEFAULT nextval('public.chat_id_seq'::regclass);
+
+
+--
+-- Name: condition id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.condition ALTER COLUMN id SET DEFAULT nextval('public.condition_id_seq'::regclass);
+
+
+--
+-- Name: devices id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.devices ALTER COLUMN id SET DEFAULT nextval('public.devices_id_seq'::regclass);
+
+
+--
+-- Name: floors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.floors ALTER COLUMN id SET DEFAULT nextval('public.floors_id_seq'::regclass);
+
+
+--
+-- Name: messages id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.messages_id_seq'::regclass);
+
+
+--
+-- Name: offices id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offices ALTER COLUMN id SET DEFAULT nextval('public.offices_id_seq'::regclass);
+
+
+--
+-- Name: package_device id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.package_device ALTER COLUMN id SET DEFAULT nextval('public.package_device_id_seq'::regclass);
+
+
+--
+-- Name: package_device number; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.package_device ALTER COLUMN number SET DEFAULT nextval('public.package_device_number_seq'::regclass);
+
+
+--
+-- Name: roles id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_id_seq'::regclass);
+
+
+--
+-- Name: statuses id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.statuses ALTER COLUMN id SET DEFAULT nextval('public.statuses_id_seq'::regclass);
+
+
+--
+-- Name: type_devices id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.type_devices ALTER COLUMN id SET DEFAULT nextval('public.type_devices_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: applications; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.applications (id, office_id, device_id, reason, data, user_id, status_id) FROM stdin;
+1	1	1	Установка	2024-01-01	1	1
+2	2	2	Ремонт	2024-02-02	2	2
+3	3	3	Обслуживание	2024-03-03	3	3
+4	4	4	Замена	2024-04-04	4	4
+5	5	5	Обновление	2024-05-05	5	5
+6	6	6	Осмотр	2024-06-06	6	6
+7	7	7	Перемещение	2024-07-07	7	7
+8	8	8	Настройка	2024-08-08	8	8
+9	9	9	Тестирование	2024-09-09	9	9
+10	10	10	Утилизация	2024-10-10	10	10
+11	11	531	zcv	2025-01-22	1	1
+12	11	501	zxcv	2025-01-22	1	1
+33	12	585	ячсячс	2025-01-22	1	3
+18	13	602	яяяяяя	2025-01-22	1	3
+17	13	601	яяяяяя	2025-01-22	1	3
+16	1	4	ииии	2025-01-22	1	3
+15	1	2	ииии	2025-01-22	1	3
+14	1	1	ииии	2025-01-22	1	3
+19	1	4	яяяяяяяяяяяяяяяяяяяяяячччччччччччччч	2025-01-22	1	3
+20	1	2	яяяяяяяяяяяяяяяяяяяяяячччччччччччччч	2025-01-22	1	3
+21	1	1	яяяяяяяяяяяяяяяяяяяяяячччччччччччччч	2025-01-22	1	3
+13	12	551	zxcvzxczxczxczxczx	2025-01-22	1	3
+22	1	2	ячс	2025-01-22	1	3
+23	1	1	ячс	2025-01-22	1	3
+24	1	5	ячс	2025-01-22	1	3
+25	1	27	ячсячсяч	2025-01-22	1	3
+26	1	28	ячсячсяч	2025-01-22	1	3
+27	1	26	ячсячсяч	2025-01-22	1	3
+28	1	29	ячсячсяч	2025-01-22	1	3
+29	12	581	ячсячс	2025-01-22	1	3
+30	12	582	ячсячс	2025-01-22	1	3
+31	12	583	ячсячс	2025-01-22	1	3
+32	12	584	ячсячс	2025-01-22	1	3
+\.
+
+
+--
+-- Data for Name: body; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.body (id, number, address) FROM stdin;
+1	101	ул. Главная, 1
+2	102	ул. Главная, 2
+3	103	ул. Главная, 3
+4	104	ул. Главная, 4
+5	105	ул. Главная, 5
+6	106	ул. Главная, 6
+7	107	ул. Главная, 7
+8	108	ул. Главная, 8
+9	109	ул. Главная, 9
+10	110	ул. Главная, 10
+\.
+
+
+--
+-- Data for Name: chat; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.chat (id, name) FROM stdin;
+1	Общий чат
+2	Поддержка ИТ
+3	Кадры
+4	Менеджмент
+5	Разработка
+6	Операции
+7	Продажи
+8	Маркетинг
+9	Логистика
+10	Чат администраторов
+\.
+
+
+--
+-- Data for Name: condition; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.condition (id, name) FROM stdin;
+1	Новый
+2	Б/У
+3	Восстановленный
+4	Поврежден
+5	В рабочем состоянии
+6	Неисправен
+7	На обслуживании
+8	Требует ремонта
+9	Списан
+10	Неизвестно
+\.
+
+
+--
+-- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.devices (id, type_id, serial_number, package_id, condition_id) FROM stdin;
+11	3	1010101	3	4
+6	6	66666	2	4
+12	2	1010102	3	4
+651	5	2040311	131	4
+501	3	2020311	101	4
+601	2	2030506	121	4
+4	4	44444	1	1
+2	2	22222	1	1
+1	1	11111	1	1
+5	5	55555	1	1
+3	3	33333	1	3
+7	7	77777	2	7
+8	8	88888	2	8
+9	9	99999	2	9
+10	10	101010	2	10
+13	3	1010103	3	2
+14	1	1010104	3	3
+15	5	1010105	3	2
+535	3	2020515	107	4
+71	1	1010501	15	2
+72	4	1010502	15	1
+73	1	1010503	15	1
+74	4	1010504	15	2
+75	5	1010505	15	1
+76	4	1010506	16	3
+77	5	1010507	16	1
+78	1	1010508	16	2
+79	3	1010509	16	3
+80	4	1010510	16	1
+81	4	1010511	17	2
+82	1	1010512	17	1
+83	2	1010513	17	1
+84	1	1010514	17	1
+85	2	1010515	17	1
+86	5	1020101	18	2
+87	4	1020102	18	2
+88	3	1020103	18	3
+89	5	1020104	18	3
+90	4	1020105	18	2
+91	5	1020106	19	1
+92	1	1020107	19	1
+93	2	1020108	19	1
+94	3	1020109	19	2
+95	4	1020110	19	2
+96	2	1020111	20	2
+97	2	1020112	20	3
+98	4	1020113	20	2
+99	1	1020114	20	3
+100	3	1020115	20	1
+101	4	1020201	21	1
+102	4	1020202	21	2
+103	3	1020203	21	3
+104	4	1020204	21	1
+105	2	1020205	21	1
+106	5	1020206	22	1
+107	1	1020207	22	2
+108	2	1020208	22	3
+31	2	1010206	7	4
+25	4	1010115	5	4
+36	4	1010211	8	4
+37	5	1010212	8	4
+27	3	1010202	6	1
+28	1	1010203	6	1
+26	1	1010201	6	1
+29	5	1010204	6	1
+16	1	1010106	4	4
+17	1	1010107	4	4
+18	1	1010108	4	1
+19	3	1010109	4	2
+20	1	1010110	4	4
+21	3	1010111	5	2
+22	2	1010112	5	3
+23	5	1010113	5	1
+24	1	1010114	5	3
+30	1	1010205	6	2
+32	3	1010207	7	4
+33	5	1010208	7	2
+34	5	1010209	7	2
+35	1	1010210	7	3
+38	3	1010213	8	1
+39	4	1010214	8	3
+40	3	1010215	8	3
+41	3	1010301	9	1
+42	3	1010302	9	3
+43	3	1010303	9	2
+44	5	1010304	9	2
+45	1	1010305	9	3
+46	4	1010306	10	3
+47	2	1010307	10	3
+48	3	1010308	10	2
+49	3	1010309	10	3
+50	3	1010310	10	1
+51	2	1010311	11	2
+52	1	1010312	11	2
+53	5	1010313	11	1
+54	4	1010314	11	3
+55	4	1010315	11	1
+56	2	1010401	12	2
+57	5	1010402	12	3
+58	3	1010403	12	2
+59	3	1010404	12	2
+60	3	1010405	12	2
+61	2	1010406	13	2
+62	2	1010407	13	3
+63	3	1010408	13	2
+64	4	1010409	13	3
+65	2	1010410	13	3
+66	5	1010411	14	3
+67	1	1010412	14	1
+68	1	1010413	14	1
+69	5	1010414	14	1
+70	3	1010415	14	1
+109	1	1020209	22	3
+110	5	1020210	22	3
+111	4	1020211	23	3
+112	3	1020212	23	3
+113	5	1020213	23	1
+114	2	1020214	23	1
+115	1	1020215	23	1
+116	1	1020301	24	2
+117	5	1020302	24	3
+118	5	1020303	24	2
+119	5	1020304	24	3
+120	2	1020305	24	1
+121	3	1020306	25	1
+122	1	1020307	25	1
+123	1	1020308	25	1
+124	4	1020309	25	1
+125	3	1020310	25	1
+126	4	1020311	26	1
+127	3	1020312	26	2
+128	4	1020313	26	1
+129	4	1020314	26	1
+130	5	1020315	26	2
+131	5	1020401	27	3
+132	4	1020402	27	2
+133	4	1020403	27	2
+134	2	1020404	27	1
+135	2	1020405	27	1
+136	1	1020406	28	2
+137	3	1020407	28	3
+138	2	1020408	28	2
+139	3	1020409	28	3
+140	4	1020410	28	3
+141	5	1020411	29	2
+142	3	1020412	29	2
+143	5	1020413	29	3
+144	4	1020414	29	3
+145	5	1020415	29	2
+146	5	1020501	30	1
+147	3	1020502	30	3
+148	3	1020503	30	1
+149	3	1020504	30	3
+150	2	1020505	30	3
+151	4	1020506	31	2
+152	1	1020507	31	2
+153	3	1020508	31	2
+154	4	1020509	31	2
+155	1	1020510	31	3
+156	5	1020511	32	1
+157	5	1020512	32	3
+158	1	1020513	32	3
+159	1	1020514	32	1
+160	2	1020515	32	2
+161	1	1030101	33	1
+162	2	1030102	33	2
+163	2	1030103	33	2
+164	3	1030104	33	3
+165	2	1030105	33	3
+166	1	1030106	34	2
+167	2	1030107	34	1
+168	2	1030108	34	2
+169	2	1030109	34	3
+170	4	1030110	34	1
+171	1	1030111	35	1
+172	3	1030112	35	2
+173	2	1030113	35	1
+174	3	1030114	35	1
+175	2	1030115	35	1
+176	5	1030201	36	1
+177	3	1030202	36	2
+178	5	1030203	36	3
+179	3	1030204	36	1
+180	4	1030205	36	2
+181	4	1030206	37	1
+182	5	1030207	37	2
+183	1	1030208	37	2
+184	1	1030209	37	1
+185	2	1030210	37	3
+186	5	1030211	38	1
+187	5	1030212	38	1
+188	2	1030213	38	1
+189	5	1030214	38	2
+190	1	1030215	38	3
+191	1	1030301	39	2
+192	2	1030302	39	2
+193	4	1030303	39	1
+194	1	1030304	39	1
+195	3	1030305	39	2
+196	4	1030306	40	3
+197	4	1030307	40	2
+198	5	1030308	40	1
+199	2	1030309	40	1
+200	2	1030310	40	2
+201	4	1030311	41	3
+202	2	1030312	41	1
+203	5	1030313	41	1
+204	2	1030314	41	2
+205	3	1030315	41	2
+206	1	1030401	42	3
+207	2	1030402	42	2
+208	5	1030403	42	3
+209	1	1030404	42	1
+210	3	1030405	42	2
+211	3	1030406	43	2
+212	1	1030407	43	3
+213	4	1030408	43	3
+214	3	1030409	43	3
+215	2	1030410	43	3
+216	5	1030411	44	3
+217	1	1030412	44	3
+218	2	1030413	44	2
+219	3	1030414	44	3
+220	1	1030415	44	3
+221	2	1030501	45	1
+222	4	1030502	45	3
+223	4	1030503	45	2
+224	4	1030504	45	3
+225	5	1030505	45	1
+226	2	1030506	46	2
+227	1	1030507	46	1
+228	3	1030508	46	3
+229	3	1030509	46	1
+230	3	1030510	46	3
+231	1	1030511	47	3
+232	5	1030512	47	3
+233	4	1030513	47	2
+234	4	1030514	47	3
+235	2	1030515	47	3
+236	4	1040101	48	1
+237	5	1040102	48	2
+238	5	1040103	48	1
+239	1	1040104	48	1
+240	5	1040105	48	1
+241	2	1040106	49	1
+242	3	1040107	49	3
+243	4	1040108	49	1
+244	2	1040109	49	3
+245	4	1040110	49	2
+246	1	1040111	50	2
+247	5	1040112	50	1
+248	5	1040113	50	3
+249	2	1040114	50	2
+250	1	1040115	50	1
+251	2	1040201	51	2
+252	3	1040202	51	1
+253	2	1040203	51	3
+254	5	1040204	51	2
+255	5	1040205	51	3
+256	3	1040206	52	1
+257	5	1040207	52	3
+258	3	1040208	52	1
+259	5	1040209	52	3
+260	5	1040210	52	2
+261	1	1040211	53	3
+262	4	1040212	53	2
+263	4	1040213	53	1
+264	2	1040214	53	2
+265	5	1040215	53	2
+266	4	1040301	54	2
+267	5	1040302	54	3
+268	3	1040303	54	1
+269	4	1040304	54	2
+270	3	1040305	54	1
+271	5	1040306	55	3
+272	1	1040307	55	1
+273	2	1040308	55	1
+274	1	1040309	55	3
+275	3	1040310	55	1
+276	2	1040311	56	1
+277	2	1040312	56	1
+278	2	1040313	56	3
+279	5	1040314	56	1
+280	1	1040315	56	3
+281	5	1040401	57	3
+282	2	1040402	57	2
+283	4	1040403	57	2
+284	3	1040404	57	3
+285	1	1040405	57	2
+286	3	1040406	58	1
+287	3	1040407	58	3
+288	4	1040408	58	1
+289	3	1040409	58	1
+290	1	1040410	58	3
+291	2	1040411	59	2
+292	4	1040412	59	1
+293	4	1040413	59	2
+294	1	1040414	59	3
+295	2	1040415	59	2
+296	3	1040501	60	3
+297	1	1040502	60	1
+298	3	1040503	60	1
+299	1	1040504	60	2
+300	5	1040505	60	3
+301	2	1040506	61	1
+302	2	1040507	61	2
+303	5	1040508	61	2
+304	2	1040509	61	2
+305	3	1040510	61	2
+306	4	1040511	62	3
+307	2	1040512	62	2
+308	2	1040513	62	3
+309	4	1040514	62	2
+310	4	1040515	62	1
+311	2	1050101	63	3
+312	2	1050102	63	3
+313	3	1050103	63	3
+314	1	1050104	63	3
+315	3	1050105	63	3
+316	3	1050106	64	3
+317	3	1050107	64	1
+318	5	1050108	64	1
+319	4	1050109	64	2
+320	4	1050110	64	3
+321	3	1050111	65	2
+322	4	1050112	65	1
+323	4	1050113	65	2
+324	5	1050114	65	2
+325	2	1050115	65	1
+326	3	1050201	66	1
+327	2	1050202	66	1
+328	3	1050203	66	2
+329	1	1050204	66	2
+330	4	1050205	66	3
+331	1	1050206	67	2
+332	1	1050207	67	3
+333	3	1050208	67	3
+334	2	1050209	67	2
+335	2	1050210	67	2
+336	2	1050211	68	2
+337	4	1050212	68	2
+338	4	1050213	68	2
+339	3	1050214	68	2
+340	5	1050215	68	2
+341	2	1050301	69	3
+342	5	1050302	69	3
+343	1	1050303	69	2
+344	1	1050304	69	1
+345	5	1050305	69	3
+346	4	1050306	70	2
+347	2	1050307	70	3
+348	5	1050308	70	2
+349	2	1050309	70	3
+350	4	1050310	70	3
+351	5	1050311	71	1
+352	4	1050312	71	3
+353	4	1050313	71	1
+354	2	1050314	71	2
+355	3	1050315	71	1
+356	1	1050401	72	3
+357	4	1050402	72	1
+358	5	1050403	72	1
+359	2	1050404	72	3
+360	4	1050405	72	3
+361	4	1050406	73	2
+362	2	1050407	73	2
+363	5	1050408	73	2
+364	3	1050409	73	2
+365	3	1050410	73	1
+366	3	1050411	74	3
+367	3	1050412	74	2
+368	4	1050413	74	1
+369	2	1050414	74	2
+370	1	1050415	74	2
+371	1	1050501	75	1
+372	1	1050502	75	2
+373	3	1050503	75	2
+374	3	1050504	75	2
+375	4	1050505	75	1
+376	4	1050506	76	1
+377	3	1050507	76	2
+378	3	1050508	76	3
+379	2	1050509	76	1
+380	1	1050510	76	1
+381	2	1050511	77	2
+382	5	1050512	77	1
+383	3	1050513	77	2
+384	2	1050514	77	2
+385	5	1050515	77	1
+386	5	2010101	78	2
+387	3	2010102	78	3
+388	1	2010103	78	2
+389	2	2010104	78	2
+390	5	2010105	78	1
+391	3	2010106	79	1
+392	4	2010107	79	3
+393	2	2010108	79	1
+394	3	2010109	79	2
+395	1	2010110	79	2
+396	2	2010111	80	3
+397	4	2010112	80	2
+398	4	2010113	80	1
+399	3	2010114	80	3
+400	4	2010115	80	1
+401	4	2010201	81	3
+402	2	2010202	81	1
+403	2	2010203	81	1
+404	4	2010204	81	3
+405	2	2010205	81	1
+406	1	2010206	82	2
+407	3	2010207	82	1
+408	3	2010208	82	1
+409	5	2010209	82	2
+410	2	2010210	82	3
+411	3	2010211	83	3
+412	2	2010212	83	3
+413	5	2010213	83	2
+414	4	2010214	83	2
+415	3	2010215	83	3
+416	1	2010301	84	3
+417	3	2010302	84	1
+418	4	2010303	84	3
+419	3	2010304	84	1
+420	2	2010305	84	3
+421	3	2010306	85	2
+422	2	2010307	85	3
+423	2	2010308	85	2
+424	3	2010309	85	1
+425	3	2010310	85	2
+426	4	2010311	86	1
+427	1	2010312	86	3
+428	2	2010313	86	2
+429	2	2010314	86	3
+430	1	2010315	86	1
+431	1	2010401	87	2
+432	5	2010402	87	2
+433	1	2010403	87	1
+434	3	2010404	87	2
+435	1	2010405	87	2
+436	3	2010406	88	3
+437	4	2010407	88	2
+438	1	2010408	88	3
+439	4	2010409	88	3
+440	3	2010410	88	1
+441	5	2010411	89	3
+442	2	2010412	89	2
+443	4	2010413	89	3
+444	4	2010414	89	1
+445	2	2010415	89	1
+446	5	2010501	90	1
+447	2	2010502	90	3
+448	4	2010503	90	3
+449	5	2010504	90	3
+450	5	2010505	90	3
+451	3	2010506	91	3
+452	2	2010507	91	2
+453	4	2010508	91	3
+454	5	2010509	91	1
+455	1	2010510	91	3
+456	5	2010511	92	2
+457	1	2010512	92	2
+458	2	2010513	92	3
+459	5	2010514	92	2
+460	2	2010515	92	1
+461	1	2020101	93	2
+462	3	2020102	93	3
+463	3	2020103	93	1
+464	2	2020104	93	3
+465	3	2020105	93	2
+466	5	2020106	94	1
+467	1	2020107	94	2
+468	5	2020108	94	3
+469	3	2020109	94	2
+470	5	2020110	94	3
+471	1	2020111	95	1
+472	5	2020112	95	1
+473	4	2020113	95	2
+474	3	2020114	95	1
+475	5	2020115	95	1
+476	1	2020201	96	1
+477	2	2020202	96	3
+478	5	2020203	96	2
+479	5	2020204	96	1
+480	4	2020205	96	1
+481	3	2020206	97	2
+482	4	2020207	97	2
+483	3	2020208	97	3
+484	5	2020209	97	2
+485	5	2020210	97	3
+486	3	2020211	98	3
+487	2	2020212	98	1
+488	2	2020213	98	2
+489	4	2020214	98	3
+490	1	2020215	98	1
+491	4	2020301	99	1
+492	5	2020302	99	1
+493	2	2020303	99	3
+494	4	2020304	99	1
+495	2	2020305	99	3
+496	4	2020306	100	2
+497	5	2020307	100	3
+498	5	2020308	100	2
+499	3	2020309	100	1
+500	1	2020310	100	1
+503	2	2020313	101	1
+504	1	2020314	101	1
+505	5	2020315	101	3
+506	2	2020401	102	3
+507	5	2020402	102	3
+508	4	2020403	102	2
+509	1	2020404	102	2
+510	4	2020405	102	3
+511	1	2020406	103	3
+512	2	2020407	103	1
+513	1	2020408	103	3
+514	5	2020409	103	1
+515	5	2020410	103	3
+516	3	2020411	104	3
+517	4	2020412	104	2
+518	4	2020413	104	2
+519	2	2020414	104	3
+520	5	2020415	104	2
+521	5	2020501	105	3
+522	1	2020502	105	2
+523	5	2020503	105	2
+524	3	2020504	105	1
+525	2	2020505	105	1
+526	3	2020506	106	1
+527	3	2020507	106	1
+528	5	2020508	106	3
+529	2	2020509	106	3
+530	2	2020510	106	1
+533	5	2020513	107	3
+534	3	2020514	107	3
+536	3	2030101	108	2
+537	4	2030102	108	2
+538	5	2030103	108	3
+539	4	2030104	108	2
+540	3	2030105	108	1
+541	4	2030106	109	1
+542	3	2030107	109	2
+543	3	2030108	109	1
+544	5	2030109	109	1
+545	1	2030110	109	1
+546	3	2030111	110	2
+547	4	2030112	110	2
+548	1	2030113	110	1
+549	5	2030114	110	3
+550	1	2030115	110	3
+552	4	2030202	111	1
+553	5	2030203	111	1
+554	4	2030204	111	1
+555	4	2030205	111	1
+556	5	2030206	112	3
+557	5	2030207	112	3
+558	1	2030208	112	2
+559	5	2030209	112	2
+560	4	2030210	112	2
+561	2	2030211	113	2
+562	2	2030212	113	2
+563	2	2030213	113	2
+564	2	2030214	113	3
+565	2	2030215	113	1
+566	2	2030301	114	3
+567	3	2030302	114	3
+568	4	2030303	114	3
+569	1	2030304	114	1
+570	3	2030305	114	1
+571	1	2030306	115	3
+572	4	2030307	115	2
+573	5	2030308	115	1
+574	1	2030309	115	3
+575	4	2030310	115	2
+576	1	2030311	116	2
+577	1	2030312	116	2
+578	1	2030313	116	3
+579	1	2030314	116	1
+580	4	2030315	116	2
+586	2	2030406	118	1
+587	3	2030407	118	3
+588	1	2030408	118	3
+589	1	2030409	118	2
+590	4	2030410	118	3
+591	4	2030411	119	3
+592	2	2030412	119	2
+593	5	2030413	119	2
+594	3	2030414	119	2
+502	1	2020312	101	4
+582	2	2030402	117	1
+532	1	2020512	107	4
+531	3	2020511	107	4
+551	2	2030201	111	1
+583	2	2030403	117	1
+584	5	2030404	117	1
+585	5	2030405	117	1
+581	5	2030401	117	1
+595	3	2030415	119	1
+596	4	2030501	120	2
+597	3	2030502	120	2
+598	5	2030503	120	3
+599	2	2030504	120	2
+600	1	2030505	120	2
+603	1	2030508	121	2
+604	4	2030509	121	3
+605	5	2030510	121	2
+606	4	2030511	122	2
+607	3	2030512	122	1
+608	1	2030513	122	1
+609	1	2030514	122	3
+610	5	2030515	122	1
+611	1	2040101	123	3
+612	3	2040102	123	3
+613	1	2040103	123	2
+614	2	2040104	123	2
+615	2	2040105	123	3
+616	3	2040106	124	2
+617	2	2040107	124	1
+618	5	2040108	124	1
+619	3	2040109	124	3
+620	1	2040110	124	1
+621	5	2040111	125	2
+622	4	2040112	125	2
+623	2	2040113	125	2
+624	5	2040114	125	2
+625	5	2040115	125	1
+626	5	2040201	126	1
+627	2	2040202	126	2
+628	3	2040203	126	1
+629	2	2040204	126	3
+630	1	2040205	126	1
+631	3	2040206	127	2
+632	2	2040207	127	3
+633	1	2040208	127	1
+634	4	2040209	127	3
+635	4	2040210	127	3
+636	3	2040211	128	3
+637	5	2040212	128	1
+638	4	2040213	128	2
+639	5	2040214	128	2
+640	3	2040215	128	1
+641	4	2040301	129	1
+642	4	2040302	129	1
+643	5	2040303	129	2
+644	1	2040304	129	3
+645	1	2040305	129	2
+646	3	2040306	130	2
+647	2	2040307	130	1
+648	5	2040308	130	1
+649	1	2040309	130	3
+650	5	2040310	130	2
+653	3	2040313	131	3
+654	2	2040314	131	2
+655	5	2040315	131	2
+656	2	2040401	132	2
+657	4	2040402	132	1
+658	2	2040403	132	2
+659	5	2040404	132	1
+660	3	2040405	132	3
+661	2	2040406	133	2
+662	4	2040407	133	3
+663	1	2040408	133	1
+664	4	2040409	133	2
+665	2	2040410	133	3
+666	4	2040411	134	2
+667	2	2040412	134	1
+668	3	2040413	134	3
+669	1	2040414	134	2
+670	5	2040415	134	2
+671	5	2040501	135	1
+672	1	2040502	135	2
+673	2	2040503	135	1
+674	1	2040504	135	3
+675	4	2040505	135	2
+676	2	2040506	136	1
+677	2	2040507	136	2
+678	2	2040508	136	2
+679	4	2040509	136	3
+719	3	2050304	144	2
+720	4	2050305	144	2
+721	5	2050306	145	2
+722	1	2050307	145	1
+723	2	2050308	145	3
+724	3	2050309	145	2
+725	4	2050310	145	1
+726	1	2050311	146	2
+727	5	2050312	146	1
+728	3	2050313	146	2
+729	1	2050314	146	1
+730	1	2050315	146	2
+731	5	2050401	147	3
+732	4	2050402	147	3
+733	4	2050403	147	3
+734	5	2050404	147	1
+735	5	2050405	147	1
+736	5	2050406	148	3
+737	2	2050407	148	1
+738	4	2050408	148	1
+739	2	2050409	148	3
+740	4	2050410	148	2
+741	3	2050411	149	3
+742	2	2050412	149	1
+743	2	2050413	149	3
+744	1	2050414	149	1
+745	1	2050415	149	1
+746	5	2050501	150	2
+747	3	2050502	150	2
+748	2	2050503	150	3
+749	4	2050504	150	2
+750	1	2050505	150	1
+751	2	2050506	151	3
+752	5	2050507	151	2
+753	2	2050508	151	3
+602	3	2030507	121	4
+652	2	2040312	131	4
+680	1	2040510	136	1
+681	2	2040511	137	3
+682	4	2040512	137	1
+683	2	2040513	137	3
+684	4	2040514	137	3
+685	1	2040515	137	1
+686	2	2050101	138	2
+687	3	2050102	138	2
+688	3	2050103	138	3
+689	4	2050104	138	1
+690	3	2050105	138	1
+691	4	2050106	139	2
+692	1	2050107	139	1
+693	3	2050108	139	3
+694	2	2050109	139	3
+695	2	2050110	139	2
+696	3	2050111	140	1
+697	1	2050112	140	3
+698	1	2050113	140	3
+699	1	2050114	140	1
+700	4	2050115	140	2
+701	5	2050201	141	1
+702	2	2050202	141	2
+703	1	2050203	141	2
+704	5	2050204	141	3
+705	4	2050205	141	3
+706	5	2050206	142	1
+707	5	2050207	142	2
+708	1	2050208	142	1
+709	4	2050209	142	3
+710	4	2050210	142	1
+711	4	2050211	143	3
+712	5	2050212	143	2
+713	5	2050213	143	2
+714	3	2050214	143	2
+715	1	2050215	143	1
+716	1	2050301	144	3
+717	4	2050302	144	2
+718	5	2050303	144	1
+754	5	2050509	151	2
+755	3	2050510	151	3
+756	4	2050511	152	2
+757	3	2050512	152	3
+758	5	2050513	152	1
+759	5	2050514	152	2
+760	3	2050515	152	3
+\.
+
+
+--
+-- Data for Name: floors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.floors (id, number) FROM stdin;
+1	1
+2	2
+3	3
+4	4
+5	5
+6	6
+7	7
+8	8
+9	9
+10	10
+\.
+
+
+--
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.messages (id, person1_id, messenges, "time", chat_id) FROM stdin;
+1	1	Привет! Как дела?	2025-01-15 10:00:00	1
+2	2	Привет! Все отлично, у тебя?	2025-01-15 10:01:00	1
+3	1	Что нового?	2025-01-15 10:02:00	1
+4	2	Ничего особенного, а у тебя?	2025-01-15 10:03:00	1
+5	1	Слышал о новом проекте?	2025-01-15 10:04:00	1
+6	2	Да, слышал! Выглядит интересно.	2025-01-15 10:05:00	1
+7	1	Когда встречаемся?	2025-01-15 10:06:00	1
+8	2	В любое время, предлагай.	2025-01-15 10:07:00	1
+9	1	Как там у тебя учеба?	2025-01-15 10:08:00	1
+10	2	Учеба норм, спасибо, а у тебя?	2025-01-15 10:09:00	1
+11	1	Ты в курсе про завтрашний звонок?	2025-01-15 10:10:00	1
+12	2	Да, видел напоминание.	2025-01-15 10:11:00	1
+13	1	Что думаешь об этом?	2025-01-15 10:12:00	1
+14	2	Думаю, стоит обсудить подробнее.	2025-01-15 10:13:00	1
+15	1	Давай обсудим позже?	2025-01-15 10:14:00	1
+16	2	Да, договорились.	2025-01-15 10:15:00	1
+17	1	Не забудь про встречу!	2025-01-15 10:16:00	1
+18	2	Конечно, я помню.	2025-01-15 10:17:00	1
+19	1	Увидимся завтра!	2025-01-15 10:18:00	1
+20	2	До завтра!	2025-01-15 10:19:00	1
+21	1	ТЕСТ	2025-01-15 17:30:50	1
+22	1	йцукенг	2025-01-15 17:31:22	1
+23	1	ТЕСТ	2025-01-16 13:00:16	1
+24	1	поропшншшг	2025-01-16 17:42:28	1
+25	1	vsdjnsvjkjd	2025-01-17 06:05:14	1
+\.
+
+
+--
+-- Data for Name: offices; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.offices (id, number, floors_id, body_id) FROM stdin;
+1	101	1	1
+2	102	2	2
+3	103	3	3
+4	104	4	4
+5	105	5	5
+6	106	6	6
+7	107	7	7
+8	108	8	8
+9	109	9	9
+10	110	10	10
+11	101	1	1
+12	102	1	1
+13	103	1	1
+14	104	1	1
+15	105	1	1
+16	106	1	1
+17	107	1	1
+18	108	1	1
+19	201	2	1
+20	202	2	1
+21	203	2	1
+22	204	2	1
+23	205	2	1
+24	206	2	1
+25	207	2	1
+26	301	3	1
+27	302	3	1
+28	303	3	1
+29	304	3	1
+30	305	3	1
+31	306	3	1
+32	307	3	1
+33	308	3	1
+34	309	3	1
+35	310	3	1
+36	401	4	1
+37	402	4	1
+38	403	4	1
+39	404	4	1
+40	405	4	1
+41	406	4	1
+42	407	4	1
+43	408	4	1
+44	409	4	1
+45	410	4	1
+46	501	5	1
+47	502	5	1
+48	503	5	1
+49	504	5	1
+50	505	5	1
+51	506	5	1
+52	507	5	1
+53	508	5	1
+54	509	5	1
+55	510	5	1
+56	511	5	1
+57	512	5	1
+58	513	5	1
+59	514	5	1
+60	601	6	1
+61	602	6	1
+62	603	6	1
+63	604	6	1
+64	605	6	1
+65	606	6	1
+66	607	6	1
+67	608	6	1
+68	609	6	1
+69	610	6	1
+70	611	6	1
+71	612	6	1
+72	613	6	1
+73	701	7	1
+74	702	7	1
+75	703	7	1
+76	704	7	1
+77	705	7	1
+78	801	8	1
+79	802	8	1
+80	803	8	1
+81	804	8	1
+82	805	8	1
+83	806	8	1
+84	807	8	1
+85	808	8	1
+86	809	8	1
+87	810	8	1
+88	811	8	1
+89	901	9	1
+90	902	9	1
+91	903	9	1
+92	904	9	1
+93	905	9	1
+94	1001	10	1
+95	1002	10	1
+96	1003	10	1
+97	1004	10	1
+98	1005	10	1
+99	101	1	2
+100	102	1	2
+101	103	1	2
+102	104	1	2
+103	105	1	2
+104	106	1	2
+105	107	1	2
+106	108	1	2
+107	109	1	2
+108	110	1	2
+109	111	1	2
+110	112	1	2
+111	201	2	2
+112	202	2	2
+113	203	2	2
+114	204	2	2
+115	205	2	2
+116	206	2	2
+117	207	2	2
+118	208	2	2
+119	301	3	2
+120	302	3	2
+121	303	3	2
+122	304	3	2
+123	305	3	2
+124	306	3	2
+125	307	3	2
+126	308	3	2
+127	309	3	2
+128	310	3	2
+129	311	3	2
+130	312	3	2
+131	313	3	2
+132	401	4	2
+133	402	4	2
+134	403	4	2
+135	404	4	2
+136	405	4	2
+137	406	4	2
+138	407	4	2
+139	408	4	2
+140	409	4	2
+141	410	4	2
+142	501	5	2
+143	502	5	2
+144	503	5	2
+145	504	5	2
+146	505	5	2
+147	506	5	2
+148	601	6	2
+149	602	6	2
+150	603	6	2
+151	604	6	2
+152	605	6	2
+153	701	7	2
+154	702	7	2
+155	703	7	2
+156	704	7	2
+157	705	7	2
+158	706	7	2
+159	801	8	2
+160	802	8	2
+161	803	8	2
+162	804	8	2
+163	805	8	2
+164	806	8	2
+165	807	8	2
+166	808	8	2
+167	809	8	2
+168	810	8	2
+169	811	8	2
+170	812	8	2
+171	813	8	2
+172	814	8	2
+173	901	9	2
+174	902	9	2
+175	903	9	2
+176	904	9	2
+177	905	9	2
+178	906	9	2
+179	907	9	2
+180	908	9	2
+181	909	9	2
+182	910	9	2
+183	911	9	2
+184	912	9	2
+185	1001	10	2
+186	1002	10	2
+187	1003	10	2
+188	1004	10	2
+189	1005	10	2
+190	1006	10	2
+191	1007	10	2
+192	1008	10	2
+193	101	1	3
+194	102	1	3
+195	103	1	3
+196	104	1	3
+197	105	1	3
+198	106	1	3
+199	107	1	3
+200	108	1	3
+201	109	1	3
+202	110	1	3
+203	111	1	3
+204	112	1	3
+205	113	1	3
+206	114	1	3
+207	201	2	3
+208	202	2	3
+209	203	2	3
+210	204	2	3
+211	205	2	3
+212	206	2	3
+213	207	2	3
+214	208	2	3
+215	209	2	3
+216	301	3	3
+217	302	3	3
+218	303	3	3
+219	304	3	3
+220	305	3	3
+221	306	3	3
+222	307	3	3
+223	308	3	3
+224	309	3	3
+225	310	3	3
+226	311	3	3
+227	312	3	3
+228	401	4	3
+229	402	4	3
+230	403	4	3
+231	404	4	3
+232	405	4	3
+233	406	4	3
+234	407	4	3
+235	408	4	3
+236	409	4	3
+237	410	4	3
+238	411	4	3
+239	412	4	3
+240	413	4	3
+241	501	5	3
+242	502	5	3
+243	503	5	3
+244	504	5	3
+245	505	5	3
+246	506	5	3
+247	507	5	3
+248	508	5	3
+249	509	5	3
+250	510	5	3
+251	511	5	3
+252	512	5	3
+253	513	5	3
+254	601	6	3
+255	602	6	3
+256	603	6	3
+257	604	6	3
+258	605	6	3
+259	701	7	3
+260	702	7	3
+261	703	7	3
+262	704	7	3
+263	705	7	3
+264	706	7	3
+265	707	7	3
+266	708	7	3
+267	709	7	3
+268	710	7	3
+269	711	7	3
+270	712	7	3
+271	713	7	3
+272	714	7	3
+273	801	8	3
+274	802	8	3
+275	803	8	3
+276	804	8	3
+277	805	8	3
+278	806	8	3
+279	807	8	3
+280	808	8	3
+281	901	9	3
+282	902	9	3
+283	903	9	3
+284	904	9	3
+285	905	9	3
+286	906	9	3
+287	907	9	3
+288	908	9	3
+289	1001	10	3
+290	1002	10	3
+291	1003	10	3
+292	1004	10	3
+293	1005	10	3
+294	1006	10	3
+295	1007	10	3
+296	1008	10	3
+297	1009	10	3
+298	1010	10	3
+299	1011	10	3
+300	1012	10	3
+301	1013	10	3
+302	1014	10	3
+303	101	1	4
+304	102	1	4
+305	103	1	4
+306	104	1	4
+307	105	1	4
+308	106	1	4
+309	107	1	4
+310	108	1	4
+311	109	1	4
+312	110	1	4
+313	201	2	4
+314	202	2	4
+315	203	2	4
+316	204	2	4
+317	205	2	4
+318	206	2	4
+319	207	2	4
+320	208	2	4
+321	209	2	4
+322	210	2	4
+323	211	2	4
+324	212	2	4
+325	213	2	4
+326	214	2	4
+327	301	3	4
+328	302	3	4
+329	303	3	4
+330	304	3	4
+331	305	3	4
+332	306	3	4
+333	307	3	4
+334	401	4	4
+335	402	4	4
+336	403	4	4
+337	404	4	4
+338	405	4	4
+339	406	4	4
+340	407	4	4
+341	501	5	4
+342	502	5	4
+343	503	5	4
+344	504	5	4
+345	505	5	4
+346	506	5	4
+347	507	5	4
+348	508	5	4
+349	509	5	4
+350	510	5	4
+351	511	5	4
+352	601	6	4
+353	602	6	4
+354	603	6	4
+355	604	6	4
+356	605	6	4
+357	606	6	4
+358	607	6	4
+359	608	6	4
+360	609	6	4
+361	610	6	4
+362	611	6	4
+363	701	7	4
+364	702	7	4
+365	703	7	4
+366	704	7	4
+367	705	7	4
+368	706	7	4
+369	707	7	4
+370	708	7	4
+371	709	7	4
+372	710	7	4
+373	711	7	4
+374	712	7	4
+375	801	8	4
+376	802	8	4
+377	803	8	4
+378	804	8	4
+379	805	8	4
+380	806	8	4
+381	807	8	4
+382	808	8	4
+383	809	8	4
+384	810	8	4
+385	811	8	4
+386	812	8	4
+387	813	8	4
+388	901	9	4
+389	902	9	4
+390	903	9	4
+391	904	9	4
+392	905	9	4
+393	906	9	4
+394	907	9	4
+395	908	9	4
+396	909	9	4
+397	1001	10	4
+398	1002	10	4
+399	1003	10	4
+400	1004	10	4
+401	1005	10	4
+402	1006	10	4
+403	1007	10	4
+404	101	1	5
+405	102	1	5
+406	103	1	5
+407	104	1	5
+408	105	1	5
+409	106	1	5
+410	107	1	5
+411	108	1	5
+412	109	1	5
+413	110	1	5
+414	111	1	5
+415	112	1	5
+416	201	2	5
+417	202	2	5
+418	203	2	5
+419	204	2	5
+420	205	2	5
+421	206	2	5
+422	207	2	5
+423	208	2	5
+424	301	3	5
+425	302	3	5
+426	303	3	5
+427	304	3	5
+428	305	3	5
+429	306	3	5
+430	307	3	5
+431	401	4	5
+432	402	4	5
+433	403	4	5
+434	404	4	5
+435	405	4	5
+436	406	4	5
+437	407	4	5
+438	408	4	5
+439	409	4	5
+440	410	4	5
+441	411	4	5
+442	501	5	5
+443	502	5	5
+444	503	5	5
+445	504	5	5
+446	505	5	5
+447	506	5	5
+448	507	5	5
+449	508	5	5
+450	509	5	5
+451	601	6	5
+452	602	6	5
+453	603	6	5
+454	604	6	5
+455	605	6	5
+456	606	6	5
+457	607	6	5
+458	701	7	5
+459	702	7	5
+460	703	7	5
+461	704	7	5
+462	705	7	5
+463	706	7	5
+464	707	7	5
+465	708	7	5
+466	709	7	5
+467	710	7	5
+468	711	7	5
+469	712	7	5
+470	713	7	5
+471	714	7	5
+472	801	8	5
+473	802	8	5
+474	803	8	5
+475	804	8	5
+476	805	8	5
+477	806	8	5
+478	807	8	5
+479	808	8	5
+480	809	8	5
+481	901	9	5
+482	902	9	5
+483	903	9	5
+484	904	9	5
+485	905	9	5
+486	906	9	5
+487	907	9	5
+488	1001	10	5
+489	1002	10	5
+490	1003	10	5
+491	1004	10	5
+492	1005	10	5
+493	1006	10	5
+494	1007	10	5
+495	101	1	6
+496	102	1	6
+497	103	1	6
+498	104	1	6
+499	105	1	6
+500	106	1	6
+501	201	2	6
+502	202	2	6
+503	203	2	6
+504	204	2	6
+505	205	2	6
+506	206	2	6
+507	207	2	6
+508	208	2	6
+509	209	2	6
+510	210	2	6
+511	211	2	6
+512	212	2	6
+513	213	2	6
+514	214	2	6
+515	301	3	6
+516	302	3	6
+517	303	3	6
+518	304	3	6
+519	305	3	6
+520	306	3	6
+521	307	3	6
+522	401	4	6
+523	402	4	6
+524	403	4	6
+525	404	4	6
+526	405	4	6
+527	406	4	6
+528	407	4	6
+529	408	4	6
+530	409	4	6
+531	410	4	6
+532	411	4	6
+533	412	4	6
+534	501	5	6
+535	502	5	6
+536	503	5	6
+537	504	5	6
+538	505	5	6
+539	506	5	6
+540	507	5	6
+541	508	5	6
+542	509	5	6
+543	510	5	6
+544	511	5	6
+545	512	5	6
+546	601	6	6
+547	602	6	6
+548	603	6	6
+549	604	6	6
+550	605	6	6
+551	606	6	6
+552	607	6	6
+553	608	6	6
+554	609	6	6
+555	701	7	6
+556	702	7	6
+557	703	7	6
+558	704	7	6
+559	705	7	6
+560	706	7	6
+561	707	7	6
+562	708	7	6
+563	709	7	6
+564	801	8	6
+565	802	8	6
+566	803	8	6
+567	804	8	6
+568	805	8	6
+569	806	8	6
+570	901	9	6
+571	902	9	6
+572	903	9	6
+573	904	9	6
+574	905	9	6
+575	906	9	6
+576	907	9	6
+577	908	9	6
+578	909	9	6
+579	910	9	6
+580	911	9	6
+581	1001	10	6
+582	1002	10	6
+583	1003	10	6
+584	1004	10	6
+585	1005	10	6
+586	1006	10	6
+587	1007	10	6
+588	1008	10	6
+589	101	1	7
+590	102	1	7
+591	103	1	7
+592	104	1	7
+593	105	1	7
+594	106	1	7
+595	107	1	7
+596	108	1	7
+597	109	1	7
+598	110	1	7
+599	111	1	7
+600	201	2	7
+601	202	2	7
+602	203	2	7
+603	204	2	7
+604	205	2	7
+605	206	2	7
+606	207	2	7
+607	208	2	7
+608	209	2	7
+609	210	2	7
+610	211	2	7
+611	212	2	7
+612	301	3	7
+613	302	3	7
+614	303	3	7
+615	304	3	7
+616	305	3	7
+617	306	3	7
+618	307	3	7
+619	308	3	7
+620	401	4	7
+621	402	4	7
+622	403	4	7
+623	404	4	7
+624	405	4	7
+625	406	4	7
+626	407	4	7
+627	408	4	7
+628	409	4	7
+629	410	4	7
+630	411	4	7
+631	501	5	7
+632	502	5	7
+633	503	5	7
+634	504	5	7
+635	505	5	7
+636	506	5	7
+637	507	5	7
+638	508	5	7
+639	509	5	7
+640	510	5	7
+641	511	5	7
+642	601	6	7
+643	602	6	7
+644	603	6	7
+645	604	6	7
+646	605	6	7
+647	606	6	7
+648	607	6	7
+649	608	6	7
+650	609	6	7
+651	701	7	7
+652	702	7	7
+653	703	7	7
+654	704	7	7
+655	705	7	7
+656	706	7	7
+657	707	7	7
+658	708	7	7
+659	709	7	7
+660	710	7	7
+661	711	7	7
+662	712	7	7
+663	713	7	7
+664	714	7	7
+665	801	8	7
+666	802	8	7
+667	803	8	7
+668	804	8	7
+669	805	8	7
+670	806	8	7
+671	807	8	7
+672	901	9	7
+673	902	9	7
+674	903	9	7
+675	904	9	7
+676	905	9	7
+677	906	9	7
+678	907	9	7
+679	908	9	7
+680	909	9	7
+681	910	9	7
+682	911	9	7
+683	912	9	7
+684	913	9	7
+685	914	9	7
+686	1001	10	7
+687	1002	10	7
+688	1003	10	7
+689	1004	10	7
+690	1005	10	7
+691	1006	10	7
+692	1007	10	7
+693	1008	10	7
+694	1009	10	7
+695	1010	10	7
+696	1011	10	7
+697	1012	10	7
+698	1013	10	7
+699	101	1	8
+700	102	1	8
+701	103	1	8
+702	104	1	8
+703	105	1	8
+704	106	1	8
+705	107	1	8
+706	108	1	8
+707	109	1	8
+708	110	1	8
+709	111	1	8
+710	112	1	8
+711	113	1	8
+712	201	2	8
+713	202	2	8
+714	203	2	8
+715	204	2	8
+716	205	2	8
+717	206	2	8
+718	207	2	8
+719	208	2	8
+720	301	3	8
+721	302	3	8
+722	303	3	8
+723	304	3	8
+724	305	3	8
+725	306	3	8
+726	307	3	8
+727	308	3	8
+728	309	3	8
+729	310	3	8
+730	311	3	8
+731	312	3	8
+732	401	4	8
+733	402	4	8
+734	403	4	8
+735	404	4	8
+736	405	4	8
+737	406	4	8
+738	407	4	8
+739	408	4	8
+740	409	4	8
+741	410	4	8
+742	411	4	8
+743	412	4	8
+744	501	5	8
+745	502	5	8
+746	503	5	8
+747	504	5	8
+748	505	5	8
+749	506	5	8
+750	507	5	8
+751	508	5	8
+752	509	5	8
+753	601	6	8
+754	602	6	8
+755	603	6	8
+756	604	6	8
+757	605	6	8
+758	606	6	8
+759	607	6	8
+760	608	6	8
+761	701	7	8
+762	702	7	8
+763	703	7	8
+764	704	7	8
+765	705	7	8
+766	706	7	8
+767	707	7	8
+768	801	8	8
+769	802	8	8
+770	803	8	8
+771	804	8	8
+772	805	8	8
+773	806	8	8
+774	807	8	8
+775	808	8	8
+776	809	8	8
+777	810	8	8
+778	811	8	8
+779	812	8	8
+780	901	9	8
+781	902	9	8
+782	903	9	8
+783	904	9	8
+784	905	9	8
+785	906	9	8
+786	907	9	8
+787	908	9	8
+788	909	9	8
+789	910	9	8
+790	1001	10	8
+791	1002	10	8
+792	1003	10	8
+793	1004	10	8
+794	1005	10	8
+795	101	1	9
+796	102	1	9
+797	103	1	9
+798	104	1	9
+799	105	1	9
+800	201	2	9
+801	202	2	9
+802	203	2	9
+803	204	2	9
+804	205	2	9
+805	206	2	9
+806	207	2	9
+807	208	2	9
+808	301	3	9
+809	302	3	9
+810	303	3	9
+811	304	3	9
+812	305	3	9
+813	401	4	9
+814	402	4	9
+815	403	4	9
+816	404	4	9
+817	405	4	9
+818	406	4	9
+819	407	4	9
+820	408	4	9
+821	501	5	9
+822	502	5	9
+823	503	5	9
+824	504	5	9
+825	505	5	9
+826	506	5	9
+827	507	5	9
+828	508	5	9
+829	509	5	9
+830	601	6	9
+831	602	6	9
+832	603	6	9
+833	604	6	9
+834	605	6	9
+835	606	6	9
+836	607	6	9
+837	701	7	9
+838	702	7	9
+839	703	7	9
+840	704	7	9
+841	705	7	9
+842	706	7	9
+843	707	7	9
+844	708	7	9
+845	709	7	9
+846	710	7	9
+847	711	7	9
+848	712	7	9
+849	801	8	9
+850	802	8	9
+851	803	8	9
+852	804	8	9
+853	805	8	9
+854	806	8	9
+855	807	8	9
+856	808	8	9
+857	809	8	9
+858	810	8	9
+859	811	8	9
+860	812	8	9
+861	813	8	9
+862	814	8	9
+863	901	9	9
+864	902	9	9
+865	903	9	9
+866	904	9	9
+867	905	9	9
+868	906	9	9
+869	907	9	9
+870	908	9	9
+871	909	9	9
+872	1001	10	9
+873	1002	10	9
+874	1003	10	9
+875	1004	10	9
+876	1005	10	9
+877	1006	10	9
+878	1007	10	9
+879	1008	10	9
+880	1009	10	9
+881	1010	10	9
+882	1011	10	9
+883	1012	10	9
+884	1013	10	9
+885	1014	10	9
+886	101	1	10
+887	102	1	10
+888	103	1	10
+889	104	1	10
+890	105	1	10
+891	106	1	10
+892	107	1	10
+893	108	1	10
+894	109	1	10
+895	110	1	10
+896	111	1	10
+897	112	1	10
+898	201	2	10
+899	202	2	10
+900	203	2	10
+901	204	2	10
+902	205	2	10
+903	206	2	10
+904	207	2	10
+905	208	2	10
+906	209	2	10
+907	210	2	10
+908	211	2	10
+909	212	2	10
+910	213	2	10
+911	214	2	10
+912	301	3	10
+913	302	3	10
+914	303	3	10
+915	304	3	10
+916	305	3	10
+917	306	3	10
+918	307	3	10
+919	308	3	10
+920	309	3	10
+921	310	3	10
+922	401	4	10
+923	402	4	10
+924	403	4	10
+925	404	4	10
+926	405	4	10
+927	406	4	10
+928	501	5	10
+929	502	5	10
+930	503	5	10
+931	504	5	10
+932	505	5	10
+933	506	5	10
+934	507	5	10
+935	601	6	10
+936	602	6	10
+937	603	6	10
+938	604	6	10
+939	605	6	10
+940	606	6	10
+941	607	6	10
+942	608	6	10
+943	609	6	10
+944	701	7	10
+945	702	7	10
+946	703	7	10
+947	704	7	10
+948	705	7	10
+949	706	7	10
+950	707	7	10
+951	708	7	10
+952	709	7	10
+953	710	7	10
+954	801	8	10
+955	802	8	10
+956	803	8	10
+957	804	8	10
+958	805	8	10
+959	806	8	10
+960	807	8	10
+961	901	9	10
+962	902	9	10
+963	903	9	10
+964	904	9	10
+965	905	9	10
+966	906	9	10
+967	907	9	10
+968	908	9	10
+969	909	9	10
+970	910	9	10
+971	1001	10	10
+972	1002	10	10
+973	1003	10	10
+974	1004	10	10
+975	1005	10	10
+976	1006	10	10
+977	1007	10	10
+978	1008	10	10
+979	1009	10	10
+\.
+
+
+--
+-- Data for Name: package_device; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.package_device (id, office_id, number) FROM stdin;
+1	1	1
+2	1	2
+3	1	3
+4	1	4
+5	1	5
+6	1	6
+7	1	7
+8	1	8
+9	1	9
+10	1	10
+11	2	11
+12	2	12
+13	2	13
+14	2	14
+15	2	15
+16	2	16
+17	2	17
+18	2	18
+19	2	19
+20	2	20
+21	3	21
+22	3	22
+23	3	23
+24	3	24
+25	3	25
+26	3	26
+27	3	27
+28	3	28
+29	3	29
+30	3	30
+31	4	31
+32	4	32
+33	4	33
+34	4	34
+35	4	35
+36	4	36
+37	4	37
+38	4	38
+39	4	39
+40	4	40
+41	5	41
+42	5	42
+43	5	43
+44	5	44
+45	5	45
+46	5	46
+47	5	47
+48	5	48
+49	5	49
+50	5	50
+51	6	51
+52	6	52
+53	6	53
+54	6	54
+55	6	55
+56	6	56
+57	6	57
+58	6	58
+59	6	59
+60	6	60
+61	7	61
+62	7	62
+63	7	63
+64	7	64
+65	7	65
+66	7	66
+67	7	67
+68	7	68
+69	7	69
+70	7	70
+71	8	71
+72	8	72
+73	8	73
+74	8	74
+75	8	75
+76	8	76
+77	8	77
+78	8	78
+79	8	79
+80	8	80
+81	9	81
+82	9	82
+83	9	83
+84	9	84
+85	9	85
+86	9	86
+87	9	87
+88	9	88
+89	9	89
+90	9	90
+91	10	91
+92	10	92
+93	10	93
+94	10	94
+95	10	95
+96	10	96
+97	10	97
+98	10	98
+99	10	99
+100	10	100
+101	11	101
+102	11	102
+103	11	103
+104	11	104
+105	11	105
+106	11	106
+107	11	107
+108	11	108
+109	11	109
+110	11	110
+111	12	111
+112	12	112
+113	12	113
+114	12	114
+115	12	115
+116	12	116
+117	12	117
+118	12	118
+119	12	119
+120	12	120
+121	13	121
+122	13	122
+123	13	123
+124	13	124
+125	13	125
+126	13	126
+127	13	127
+128	13	128
+129	13	129
+130	13	130
+131	14	131
+132	14	132
+133	14	133
+134	14	134
+135	14	135
+136	14	136
+137	14	137
+138	14	138
+139	14	139
+140	14	140
+141	15	141
+142	15	142
+143	15	143
+144	15	144
+145	15	145
+146	15	146
+147	15	147
+148	15	148
+149	15	149
+150	15	150
+151	16	151
+152	16	152
+153	16	153
+154	16	154
+155	16	155
+156	16	156
+157	16	157
+158	16	158
+159	16	159
+160	16	160
+161	17	161
+162	17	162
+163	17	163
+164	17	164
+165	17	165
+166	17	166
+167	17	167
+168	17	168
+169	17	169
+170	17	170
+171	18	171
+172	18	172
+173	18	173
+174	18	174
+175	18	175
+176	18	176
+177	18	177
+178	18	178
+179	18	179
+180	18	180
+181	19	181
+182	19	182
+183	19	183
+184	19	184
+185	19	185
+186	19	186
+187	19	187
+188	19	188
+189	19	189
+190	19	190
+191	20	191
+192	20	192
+193	20	193
+194	20	194
+195	20	195
+196	20	196
+197	20	197
+198	20	198
+199	20	199
+200	20	200
+\.
+
+
+--
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.roles (id, name) FROM stdin;
+1	Администратор
+2	Менеджер
+3	Техник
+4	Персонал
+5	Пользователь
+6	Супервайзер
+7	Гость
+8	Оператор
+9	Исполнитель
+10	Ассистент
+\.
+
+
+--
+-- Data for Name: statuses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.statuses (id, name) FROM stdin;
+1	Открыто
+2	В процессе
+3	Закрыто
+4	Ожидание
+5	Решено
+6	Повторно открыто
+7	Отменено
+8	На удержании
+9	Не выполнено
+10	Завершено
+\.
+
+
+--
+-- Data for Name: type_devices; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.type_devices (id, name) FROM stdin;
+1	Ноутбук
+2	Настольный ПК
+3	Принтер
+4	Сканер
+5	Роутер
+6	Коммутатор
+7	Межсетевой экран
+9	Телефон
+10	Проектор
+17	тест1
+18	тест2111
+21	ячсчссссс
+23	ссяяяя
+8	Точка доступа
+31	sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+32	sss
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, name, login, password, role_id) FROM stdin;
+1	Алиса	alisa1	пароль1	1
+2	Боб	bob2	пароль2	2
+3	Чарли	charlie3	пароль3	3
+4	Давид	david4	пароль4	4
+5	Ева	eva5	пароль5	5
+6	Франк	frank6	пароль6	6
+7	Грейс	grace7	пароль7	7
+8	Хайди	heidi8	пароль8	8
+9	Иван	ivan9	пароль9	9
+10	Джуди	judy10	пароль10	10
+\.
+
+
+--
+-- Name: applications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.applications_id_seq', 33, true);
+
+
+--
+-- Name: body_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.body_id_seq', 1, true);
+
+
+--
+-- Name: chat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.chat_id_seq', 1, false);
+
+
+--
+-- Name: condition_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.condition_id_seq', 1, false);
+
+
+--
+-- Name: devices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.devices_id_seq', 760, true);
+
+
+--
+-- Name: floors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.floors_id_seq', 1, false);
+
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.messages_id_seq', 25, true);
+
+
+--
+-- Name: offices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.offices_id_seq', 979, true);
+
+
+--
+-- Name: package_device_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.package_device_id_seq', 200, true);
+
+
+--
+-- Name: package_device_number_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.package_device_number_seq', 1, false);
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.roles_id_seq', 1, false);
+
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.statuses_id_seq', 1, false);
+
+
+--
+-- Name: type_devices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.type_devices_id_seq', 32, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+
+
+--
+-- Name: applications applications_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications
+    ADD CONSTRAINT applications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: body body_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.body
+    ADD CONSTRAINT body_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chat chat_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chat
+    ADD CONSTRAINT chat_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: condition condition_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.condition
+    ADD CONSTRAINT condition_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: devices devices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.devices
+    ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: floors floors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.floors
+    ADD CONSTRAINT floors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: offices offices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offices
+    ADD CONSTRAINT offices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: package_device package_device_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.package_device
+    ADD CONSTRAINT package_device_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.statuses
+    ADD CONSTRAINT statuses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: type_devices type_devices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.type_devices
+    ADD CONSTRAINT type_devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: applications applications_device_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications
+    ADD CONSTRAINT applications_device_id_foreign FOREIGN KEY (device_id) REFERENCES public.devices(id);
+
+
+--
+-- Name: applications applications_office_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications
+    ADD CONSTRAINT applications_office_id_foreign FOREIGN KEY (office_id) REFERENCES public.offices(id);
+
+
+--
+-- Name: applications applications_status_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications
+    ADD CONSTRAINT applications_status_id_foreign FOREIGN KEY (status_id) REFERENCES public.statuses(id);
+
+
+--
+-- Name: applications applications_user_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.applications
+    ADD CONSTRAINT applications_user_id_foreign FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: devices devices_condition_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.devices
+    ADD CONSTRAINT devices_condition_id_foreign FOREIGN KEY (condition_id) REFERENCES public.condition(id);
+
+
+--
+-- Name: devices devices_office_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.devices
+    ADD CONSTRAINT devices_office_id_foreign FOREIGN KEY (package_id) REFERENCES public.offices(id);
+
+
+--
+-- Name: devices devices_type_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.devices
+    ADD CONSTRAINT devices_type_id_foreign FOREIGN KEY (type_id) REFERENCES public.type_devices(id);
+
+
+--
+-- Name: messages messages_chat_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_chat_id_foreign FOREIGN KEY (chat_id) REFERENCES public.chat(id);
+
+
+--
+-- Name: messages messages_person1_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_person1_foreign FOREIGN KEY (person1_id) REFERENCES public.users(id);
+
+
+--
+-- Name: offices offices_body_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offices
+    ADD CONSTRAINT offices_body_id_foreign FOREIGN KEY (body_id) REFERENCES public.body(id);
+
+
+--
+-- Name: offices offices_floors_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offices
+    ADD CONSTRAINT offices_floors_id_foreign FOREIGN KEY (floors_id) REFERENCES public.floors(id);
+
+
+--
+-- Name: package_device package_device_office_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.package_device
+    ADD CONSTRAINT package_device_office_id_fkey FOREIGN KEY (office_id) REFERENCES public.offices(id);
+
+
+--
+-- Name: users users_role_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_role_id_foreign FOREIGN KEY (role_id) REFERENCES public.roles(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
